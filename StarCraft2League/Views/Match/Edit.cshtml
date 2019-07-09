@@ -1,0 +1,39 @@
+﻿@model StarCraft2League.Models.Seasons.Match
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit match</h1>
+
+<h4>@Model.FirstPlayer.BattleTag vs @Model.SecondPlayer.BattleTag</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-antiforgery="true" mvc-action="MVC.Match.Edit(Model)" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MatchId" />
+            <div class="form-group">
+                <label asp-for="FirstPlayerWins" class="control-label">@Model.FirstPlayer.BattleTag wins</label>
+                <input asp-for="FirstPlayerWins" class="form-control" />
+                <span asp-validation-for="FirstPlayerWins" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondPlayerWins" class="control-label">@Model.SecondPlayer.BattleTag wins</label>
+                <input asp-for="SecondPlayerWins" class="form-control" />
+                <span asp-validation-for="SecondPlayerWins" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a mvc-action="MVC.Season.Schedule()">Back to @MVC.Season.ActionNames.Schedule</a>
+</div>
+
+@section Scripts {
+    <partial name="@MVC.Shared.Views.ViewNames._ValidationScriptsPartial" />
+}

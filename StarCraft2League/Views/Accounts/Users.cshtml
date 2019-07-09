@@ -1,0 +1,43 @@
+﻿@using StarCraft2League.Models.Users;
+
+@model IList<Role>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@using (Html.BeginForm())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>BattleTag</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                User[] users = Model.SelectMany(role => role.Users).OrderBy(u => u.BattleTag).ToArray();
+                for (int i = 0; i < users.Length; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.Label(users[i].BattleTag)
+                            @Html.Hidden("[" + i + "].BattleTag", users[i].BattleTag)
+                        </td>
+                        <td>
+                            @Html.DropDownList("[" + i + "].RoleId", new SelectList(Model, "Id", "Name", users[i].RoleId))
+                        </td>
+                        <td>
+                            @Html.Hidden("[" + i + "].Id", users[i].Id)
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-default">Save</button>
+}

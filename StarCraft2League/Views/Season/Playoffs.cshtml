@@ -1,0 +1,44 @@
+﻿@model IList<StarCraft2League.Models.Seasons.Rounds.PlayoffsRound>
+
+@section AddToHead {
+    <link href="@Url.Content(Links.css.Playoffs_css)" rel="stylesheet" />
+}
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@MVC.Season.ActionNames.Playoffs</h1>
+
+<div class="content">
+    <hgroup>@foreach (var playoffsRound in Model)
+        {<h2>@playoffsRound.Name</h2>}</hgroup>
+    <div class="line-break"></div>
+    <div class="rounds">
+        @for (
+            int i = 0, p = 1, pNext = p + (int)Math.Pow(2, i + 1);
+            i < Model.Count - 1;
+            i++, p = pNext, pNext = pNext + (int)Math.Pow(2, i + 1)
+            )
+        {<div class="round" style="--p: @p; --pNext: @pNext; --r: @(Model.Count - i - 1)">
+                @for (int k = 0; k < Model[i].Matches.Count; k += 2)
+                {
+                    <div class="pair-of-matches-container" style="--k: @(k/2);">
+                        <div class="pair-of-matches">
+                            @await Html.PartialAsync(MVC.Season.Views.ViewNames._Match, Model[i].Matches[k])
+                            @await Html.PartialAsync(MVC.Season.Views.ViewNames._Match, Model[i].Matches[k + 1])
+                        </div>
+                        <div class="grid-line-container">
+                            <div class="pin"></div>
+                            <div class="grid-line"></div>
+                        </div>
+                    </div>
+                }
+            </div>}<div class="round">
+    @foreach (var match in Model[Model.Count - 1].Matches)
+    {
+        @await Html.PartialAsync(MVC.Season.Views.ViewNames._Match, match)
+    }
+</div>
+</div>
+</div>

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<StarCraft2League.Models.Users.User>
+
+@{
+    ViewData["Title"] = "Participants";
+}
+
+<h1>Current season league participants</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BattleTag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisplayedName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var participant in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => participant.BattleTag)
+                </td>
+                <td>
+                    <participant user="@participant"></participant>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

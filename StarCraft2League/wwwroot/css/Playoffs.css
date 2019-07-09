@@ -1,0 +1,113 @@
+﻿:root {
+    --grid-lines-width: 10px;
+    --column-width: 200px;
+    --column-width-with-grid: calc(var(--column-width) + 2 * var(--grid-lines-width));
+    --base-margin: 25px;
+    --line-width: 1px;
+    --lines-color: black;
+    --lines-style: var(--line-width) solid var(--lines-color);
+}
+
+.content
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+hgroup
+{
+    width: 100%;
+}
+
+.line-break {
+    width: 100%;
+}
+
+h2
+{
+    display: inline-block;
+    text-align: center;
+    width: var(--column-width-with-grid);
+    padding-right: var(--grid-lines-width);
+}
+
+.round
+{
+    display: inline-block;
+    vertical-align: middle;
+    width: var(--column-width-with-grid);
+    --margin: calc(var(--base-margin) * var(--p));
+}
+
+.pair-of-matches-container
+{
+    display: inline-block;
+}
+
+.pair-of-matches
+{
+    display: inline-block;
+    width: var(--column-width);
+}
+
+.match
+{
+    display: inline-block;
+    border: 1px solid var(--lines-color);
+    border-radius: 3px;
+    padding: 0;
+    margin: var(--margin) 0px;
+    width: var(--column-width);
+}
+
+.top-player-and-result
+{
+    border-bottom: var(--lines-style);
+}
+
+.player
+{
+    padding-left: 5px;
+}
+
+.score
+{
+    float: right;
+    width: 15px;
+    text-align: center;
+    border-left: var(--lines-style);
+}
+
+.grid-line-container
+{
+    display: inline-block;
+    float: right;
+    width: calc(2 * var(--grid-lines-width));
+}
+
+.grid-line
+{
+    display: inline-block;
+    float: right;
+    width: var(--grid-lines-width);
+    margin: calc(var(--base-margin) + var(--margin)) 0px;
+    height: calc(2 * (var(--base-margin) * (var(--p) + 1) + var(--line-width)));
+    border-top: var(--lines-style);
+    border-right: var(--lines-style);
+    border-bottom: var(--lines-style);
+}
+
+.pin
+{
+    display: inline-block;
+    float: right;
+    width: var(--grid-lines-width);
+    --pin-margin: calc(var(--base-margin) * (1 + var(--pNext)));
+    margin-top: calc(var(--pin-margin) + var(--r) * var(--line-width) - var(--k) * var(--line-width));
+    height: var(--line-width);
+    border: none;
+    background-color: var(--lines-color);
+    color: var(--lines-color);
+    align-self: flex-end;
+    display: inline-block;
+}

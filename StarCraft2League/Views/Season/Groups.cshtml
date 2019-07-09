@@ -1,0 +1,73 @@
+﻿@using StarCraft2League.Models.Seasons;
+@using StarCraft2League.Services.Interfaces;
+@using StarCraft2League.ViewModels;
+@using System.Collections.Generic;
+
+@model IList<Group>
+
+@inject IGroupsService GroupsService
+
+@{
+    ViewData["Title"] = nameof(Group) + "s";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    <h2>Group @((char)('A' + i))</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.Single().Rounds.Single().Group.UserGroups.Single().User.DisplayedName)</th>
+                <th>Win matches count</th>
+                <th>Lose matches count</th>
+                <th>Win games count</th>
+                <th>Lose games count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (GroupPlayerResult playerResult in GroupsService.GetSortedGroupResults(Model[i]))
+            {
+            <tr>
+                <td><participant user="@playerResult.Player"></participant></td>
+                <td>@playerResult.WinMatchesCount</td>
+                <td>@playerResult.LoseMatchesCount</td>
+                <td>@playerResult.WinGamesCount</td>
+                <td>@playerResult.LoseGameCount</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@*<table class="table">
+        <thead>
+            <tr>
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <th>
+                        Group @((char)('A' + i))
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                int groupPlayerCount = Model.Max(g => g.UserGroups.Count);
+                for (int i = 0; i < groupPlayerCount; i++)
+                {
+                    <tr>
+                        @foreach (var group in Model)
+                        {
+                            if (group.UserGroups.Count > i)
+                            {
+                                <td>@group.UserGroups[i].User.BattleTag</td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>*@

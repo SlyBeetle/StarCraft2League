@@ -1,0 +1,16 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Belarus StarCraft 2 League Season @Model</h1>
+
+<ul>
+    <li>
+        <a mvc-action="MVC.Season.Groups(Model)">@MVC.Season.ActionNames.Groups</a>
+    </li>
+    <li>
+        <a mvc-action="MVC.Season.Playoffs(Model)">@MVC.Season.ActionNames.Playoffs</a>
+    </li>
+</ul>

@@ -1,0 +1,13 @@
+﻿@model StarCraft2League.Models.Seasons.Match
+
+<a mvc-action="MVC.Match.Edit(Model.MatchId)" class="match">
+    <div class="top-player-and-result">
+        @*<img src="~/Images/" />*@
+        <span class="player"><participant is-link="false" user="@Model.FirstPlayer"></participant></span>
+        <span class="score">@Model.FirstPlayerWins</span>
+    </div>
+    <div>
+        <span class="player"><participant is-link="false" user="@Model.SecondPlayer"></participant></span>
+        <span class="score">@Model.SecondPlayerWins</span>
+    </div>
+</a>

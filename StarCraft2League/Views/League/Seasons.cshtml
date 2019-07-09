@@ -1,0 +1,21 @@
+﻿@using StarCraft2League.Models.Seasons;
+@model IEnumerable<Season>
+
+@{
+    ViewData["Title"] = nameof(Season) + "s";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <tbody>
+        @foreach (var season in Model)
+        {
+            <tr>
+                <td>
+                    <a mvc-action="MVC.Season.Details(season.Id)">Belarus StarCraft 2 League Season @season.Id</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,117 @@
+﻿@using StarCraft2League.ViewModels;
+
+@model ProfileAndMatches
+
+@{
+    ViewData["Title"] = nameof(Model.Profile);
+}
+
+<a href="@Model.Profile.Url">
+    <h1>
+        <img src="@Model.Profile.AvatarUrl" />
+        @Model.Profile.User.DisplayedName
+    </h1>
+</a>
+
+@if (Model.CurrentSeasonMatches.Any())
+{
+    <h2>Your matches in the current season</h2>
+    <h3>Wins: @Model.CurrentSeasonWins, Losses: @Model.CurrentSeasonLosses (winrate: @Model.CurrentSeasonWinrate.ToString("#.##")%)</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().Round.EventDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().FirstPlayer.DisplayedName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().FirstPlayer.DisplayedName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().FirstPlayerWins)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().SecondPlayerWins)
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var match in Model.CurrentSeasonMatches)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.Round.EventDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.FirstPlayer.DisplayedName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.SecondPlayer.DisplayedName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.FirstPlayerWins)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.SecondPlayerWins)
+                    </td>
+                    <td>
+                        <a mvc-action="MVC.Match.Edit(match.MatchId)">@MVC.Match.ActionNames.Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.Matches.Any())
+{
+    <h2>Your match history</h2>
+    <h3>Wins: @Model.Wins, Losses: @Model.Losses (winrate: @Model.Winrate.ToString("#.##")%)</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().Round.EventDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().FirstPlayer.DisplayedName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().FirstPlayer.DisplayedName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().FirstPlayerWins)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(m => Model.Matches.Single().SecondPlayerWins)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var match in Model.Matches)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.Round.EventDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.FirstPlayer.DisplayedName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.SecondPlayer.DisplayedName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.FirstPlayerWins)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => match.SecondPlayerWins)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,60 @@
+﻿@using StarCraft2League.Extensions;
+@using StarCraft2League.Services.Interfaces;
+@using StarCraft2League.ViewModels;
+
+@model StarCraft2League.ViewModels.SeasonOptions
+
+@inject ILeagueService LeagueService
+@inject ISeasonService SeasonService
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    @if (User.IsAdmin() && (!LeagueService.IsStarted || !SeasonService.Current.IsRegistrationOpen))
+    {
+        <form asp-antiforgery="true" mvc-action="MVC.League.Launch(Model)" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StartDate">Select a season start date:</label>
+                <input type="date"
+                       name="@nameof(SeasonOptions.StartDate)"
+                       value="@String.Concat(DateTime.Now.ToString("o").Take(10))" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartMomentTime">Select a start time:</label>
+                <input type="time" asp-for="StartMomentTime" />
+                <span asp-validation-for="StartMomentTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DaysBetweenRounds">Setup the interval between rounds:</label>
+                <input type="number"
+                       asp-for="DaysBetweenRounds"
+                       value="@SeasonOptions.DefaultDaysBetweenRounds" />
+                <label asp-for="DaysBetweenRounds">days</label>
+                <input type="time" asp-for="TimeBetweenRounds" />
+                <label asp-for="TimeBetweenRounds">hours, minutes and seconds</label>
+            </div>
+            <span asp-validation-for="DaysBetweenRounds" class="text-danger"></span>
+            <span asp-validation-for="TimeBetweenRounds" class="text-danger"></span>
+            <div class="form-group">
+                <input type="submit" value="Launch new season" class="btn btn-primary" />
+            </div>
+        </form>
+    }
+    @if (User.Identity.IsAuthenticated && LeagueService.IsStarted && SeasonService.CanRegister(User.GetId()))
+    {
+        <a mvc-action="MVC.Season.Register()" class="btn btn-default">@MVC.Season.ActionNames.Register</a>
+        @if (User.IsAdmin())
+        {
+            <a mvc-action="MVC.Season.RegisterAll()" class="btn btn-default">@MVC.Season.ActionNames.RegisterAll</a>
+        }
+    }
+</div>
+
+@section Scripts {
+    <partial name="@MVC.Shared.Views.ViewNames._ValidationScriptsPartial" />
+}

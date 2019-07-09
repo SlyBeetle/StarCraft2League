@@ -1,0 +1,68 @@
+﻿@using StarCraft2League.Models.Seasons;
+@using StarCraft2League.Extensions;
+
+@model IList<Group>
+
+@{
+    ViewData["Title"] = "Schedule";
+}
+
+<h1>Current season group schedule</h1>
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    <h2>Group @((char)('A' + i))</h2>
+    @for (int j = 0; j < Model[i].Rounds.Count; j++)
+    {
+        <h3>Round @(j + 1)</h3>
+        <div>Event date: @Model[i].Rounds[j].EventDate</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(m => Model[i].Rounds.Single().Matches.Single().FirstPlayer.DisplayedName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => Model[i].Rounds.Single().Matches.Single().SecondPlayer.DisplayedName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => Model[i].Rounds.Single().Matches.Single().FirstPlayerWins)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => Model[i].Rounds.Single().Matches.Single().SecondPlayerWins)
+                    </th>
+                    @if (User.IsAdmin())
+                    {
+                        <th>
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var match in Model[i].Rounds[j].Matches)
+                {
+                    <tr>
+                        <td>
+                            <participant user="@match.FirstPlayer"></participant>
+                        </td>
+                        <td>
+                            <participant user="@match.SecondPlayer"></participant>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => match.FirstPlayerWins)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => match.SecondPlayerWins)
+                        </td>
+                        @if (User.IsAdmin())
+                        {
+                            <td>
+                                <a mvc-action="MVC.Match.Edit(match.MatchId)">@MVC.Match.ActionNames.Edit</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
